@@ -21,7 +21,7 @@ def load_data(messages_filepath, categories_filepath):
     df = (
         pd
         .read_csv(messages_filepath)
-        .drop(['original', 'genre'], axis=1)
+        .drop(['original'], axis=1)
         .merge(
             pd.read_csv(categories_filepath), how='outer', on='id'
         )
