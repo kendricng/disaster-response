@@ -38,7 +38,7 @@ def load_data(database_filepath):
         
     # set model variables
     X = df['message']
-    Y = df.drop('message', axis=1)
+    Y = df.drop(['message', 'genre'], axis=1)
     category_names = Y.columns.values
     
     return X, Y, category_names
