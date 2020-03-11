@@ -4,7 +4,7 @@ from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.metrics import classification_report, f1_score
+from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.pipeline import Pipeline
@@ -26,11 +26,13 @@ def load_data(database_filepath):
     Load data into dataframes
     """
     # load database onto dataframe
-    filepath = f'sqlite:///{database_filepath}'
-    engine = create_engine(filepath)
+    engine_name = re.sub(
+        r'(.db)$', '', database_filepath.split('/')[-1]
+    )
+    engine = create_engine(f'sqlite:///{engine_name}')
     df = (
         pd
-        .read_sql_table(re.sub(r'(.db)$', '', filepath.split('/')[-1]), filepath)
+        .read_sql_table(database_filepath, engine)
         .drop('id', axis=1)
     )
         

@@ -95,12 +95,12 @@ def clean_data(df):
     return df_clean
 
 
-def save_data(df, database_filename):
-    engine = create_engine(f'sqlite:///{database_filename}')
-    df.to_sql(re.sub(
-        r'(.db)$', '', database_filename.split('/')[-1]
-        ), engine, index=False
+def save_data(df, database_filepath):
+    engine_name = re.sub(
+        r'(.db)$', '', database_filepath.split('/')[-1]
     )
+    engine = create_engine(f'sqlite:///{engine_name}')
+    df.to_sql(database_filepath, engine, index=False)
     
     pass
 
