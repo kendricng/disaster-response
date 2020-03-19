@@ -96,11 +96,11 @@ def clean_data(df):
 
 
 def save_data(df, database_filepath):
-    engine_name = re.sub(
+    engine = create_engine(f'sqlite:///{database_filepath}')
+    table_name = re.sub(
         r'(.db)$', '', database_filepath.split('/')[-1]
     )
-    engine = create_engine(f'sqlite:///{engine_name}')
-    df.to_sql(database_filepath, engine, index=False)
+    df.to_sql(table_name, engine, if_exists='replace', index=False)
     
     pass
 
