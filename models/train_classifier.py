@@ -26,13 +26,13 @@ def load_data(database_filepath):
     Load data into dataframes
     """
     # load database onto dataframe
-    engine_name = re.sub(
+    engine = create_engine(f'sqlite:///{database_filepath}')
+    table_name = re.sub(
         r'(.db)$', '', database_filepath.split('/')[-1]
     )
-    engine = create_engine(f'sqlite:///{engine_name}')
     df = (
         pd
-        .read_sql_table(database_filepath, engine)
+        .read_sql_table(table_name, engine)
         .drop('id', axis=1)
     )
         
@@ -70,19 +70,17 @@ def build_model():
         ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(RandomForestClassifier()))
     ])
-    
-    parameters = {
-        'vect__ngram_range': ((1, 1), (1, 2)),
-        'vect__max_df': (0.5, 0.75, 1.0),
-        'vect__max_features': (None, 5000, 10000),
-        'tfidf__use_idf': (True, False),
-        'clf__estimator__n_estimators': [50, 100, 200],
-        'clf__estimator__min_samples_split': [2, 3, 4]
-    }
 
-    cv = GridSearchCV(pipeline, param_grid=parameters)
+    return pipeline
     
-    return cv
+    # parameters = {
+    #     'vect__ngram_range': ((1, 1), (1, 2)),
+    #     'clf__estimator__min_samples_split': [2, 3, 4]
+    # }
+
+    # cv = GridSearchCV(pipeline, param_grid=parameters)
+    
+    # return cv
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
