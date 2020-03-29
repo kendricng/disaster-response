@@ -10,9 +10,33 @@
 
 # 1. Installation
 
-The scripts in the Jupyter notebooks are written in Python 3.7+ using the below libraries:
+The scripts are written in Python 3.7+ using the below libraries:
 
-Since production code was not written in mind, note that there may be issues with running the notebooks when running future versions of these packages.
+## Python Libraries
+
+- [numpy](https://numpy.org/): mathematical computations and array manipulation; and
+- [pandas](https://pandas.pydata.org/): data manipulation and analysis
+- [re] : manipulation of regular expressions as strings
+- [nltk](https://www.nltk.org/): natural language toolkit for processing text;
+- [pickle](https://docs.python.org/3/library/pickle.html): Python object serialization tool used to pickle machine learning results; and
+- [scikit-learn](https://scikit-learn.org/): machine learning training and pipeling building.
+- [flask](https://flask.palletsprojects.com/en/1.1.x/): micro web framework;
+- [json](https://docs.python.org/2/library/json.html): manipulation of JSON formats; and
+- [plotly](https://plot.ly/): scientific graphic libraries.
+- [SQLAlchemy](https://www.sqlalchemy.org/): database access and writing; and
+- [sys](https://docs.python.org/2/library/sys.html): scripts' interaction with the Python interpreter.
+
+Note that dependency issues have been recorded while running `scikit-learn` from version `0.19.1` onwards.
+
+# App Instructions
+
+1. Run the following commands in the project's root directory:
+
+- To run ETL pipeline that cleans data and stores in database, run `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
+- To run ML pipeline that trains classifier and saves a pickle file, run `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
+- To run the web app, run `python app/run.py`
+
+2. Go to http://0.0.0.0:3001/
 
 # 2. Repo Motivation
 
@@ -22,19 +46,33 @@ This repository predicts the type of disaster a particular message is related to
 
 This repository consists of the following files:
 
+- [app](./app): front end files to render onto a website;
+- [data](./data): original CSV files from Figure Eight, the database file from the combined CSV files, and the script used to generate the database; and
+- [model](./model): script for training the machine learning model.
+
+Note that the pickle file was too large to upload onto GitHub. We suggest you training the model on local with a stronger GPU capacity as it may take hours to train the model.
+
 # 4. Summary of Results
 
 ## Technical Summary
 
+I performed NLP on the messages and used TF-IDF and Count to use as features for predicting the label associated with that message (e.g. first-aid, water, natural disaster).
+
+Without GridSerach, the model had an average F-1 score of around 0.8. After adding GridSearch with 2-3 hyperparameters, we improved the F-1 score to around 0.89.
+
 ## Feature Engineering
 
-I improved the score of this model mainly by using the following strategies:
+I improved the score of this model mainly by using the following classifiers:
 
-## Edge Cases
-
-## Data Integrity Issues
+1. Count
+2. TFIDF
+3. Multiclass Classification
 
 ## Room for Improvement
+
+- Faster run times with `SpaCy` and `TensorFlow` instead of using a `TF-IDF` Vectorizer.
+- Diagnose new version issues with `scikit-learn`.
+- Over- and undersampling messages from certain labels to have a more balanced dataset.
 
 # 5. Others
 
