@@ -23,7 +23,15 @@ nltk.download('wordnet')
 
 def load_data(database_filepath):
     """
-    Load data into dataframes
+    Load data into DataFrames.
+
+    Input:
+        database_filepath - suggest using './data/database_name'
+
+    Return:
+        X              - DataFrame with message as predictive variable
+        Y              - DataFrame with all message types
+        category_names - column names of Y
     """
     # load database onto dataframe
     engine = create_engine(f'sqlite:///{database_filepath}')
@@ -45,7 +53,16 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
-    """Tokenize text into a list"""
+    """
+    Tokenize text into a list of words.
+
+    Input:
+        text - a 'message' value in the DataFrame
+
+    Return:
+        words - lemmatize message and add them as elements
+                in a list
+    """
     # step 1: tokenize text
     words = word_tokenize(
         re.sub(r'[^a-zA-Z0-9]', ' ', text.lower())
@@ -64,7 +81,20 @@ def tokenize(text):
 
 
 def build_model():
-    """Build a model with GridSearch optimizers"""
+    """
+    Build a machine learning pipeline with GridSearch
+    hyperparamenters, which have been limited to 2 to
+    run on a CPU for a reasonable amount of time.
+
+    Expect around 2-3 hours of training time.
+
+    Input:
+        None.
+
+    Return:
+        cv - a machine learning pipeline with GridSearch
+             hyperparameters included
+    """
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),

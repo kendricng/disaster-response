@@ -96,6 +96,17 @@ def clean_data(df):
 
 
 def save_data(df, database_filepath):
+    """
+    Saves the file to a database_filepath.
+    
+    Input:
+        df                - combined dataframe
+        database_filepath - suggest using './data/database_name'
+    
+    Return:
+        None
+    
+    """
     engine = create_engine(f'sqlite:///{database_filepath}')
     table_name = re.sub(
         r'(.db)$', '', database_filepath.split('/')[-1]
