@@ -34,7 +34,7 @@ Note that dependency issues have been recorded while running `scikit-learn` from
 
 - To run ETL pipeline that cleans data and stores in database, run `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
 - To run ML pipeline that trains classifier and saves a pickle file, run `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
-- To run the web app, run `python app/run.py`
+- To run the web app, run `python myapp/run.py`
 
 2. Go to http://0.0.0.0:3001/
 
