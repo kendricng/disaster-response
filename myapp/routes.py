@@ -1,6 +1,6 @@
 from cleandata import return_figures
 from flask import render_template, request, jsonify
-from run import app
+from myapp import app
 from sklearn.externals import joblib
 
 import json
