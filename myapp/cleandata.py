@@ -1,7 +1,16 @@
+from nltk.corpus import stopwords
+from nltk.stem.wordnet import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
 from sqlalchemy import create_engine
 from plotly.graph_objs import Bar
 
+import nltk
+import re
 import pandas as pd
+
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
 
 def load_data():
     """Load data into dataframe"""
@@ -28,7 +37,7 @@ def tokenize_graph(text):
 
 def clean_data_one(df):
     """Clean data for graph one"""
-    categories = df.drop('message', axis=1)
+    categories = df.drop(columns=['message', 'genre'])
     sum_per_category = categories.sum()
     percent_category = (
         (sum_per_category / sum_per_category.sum())
@@ -85,7 +94,7 @@ def clean_data_three(df, col_name, max_words=50):
     
     return top_n_words, top_n_values
 
-def return_figures(percent_category, genre_counts):
+def return_figures():
     """Create plotly graphs"""
     # load relevant data
     df = load_data()
