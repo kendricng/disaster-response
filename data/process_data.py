@@ -107,7 +107,7 @@ def save_data(df, database_filepath):
         None
     
     """
-    engine = create_engine(f'sqlite:///{database_filepath}')
+    engine = create_engine('sqlite:///{}'.format(database_filepath))
     table_name = re.sub(
         r'(.db)$', '', database_filepath.split('/')[-1]
     )
