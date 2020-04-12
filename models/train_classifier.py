@@ -34,7 +34,7 @@ def load_data(database_filepath):
         category_names - column names of Y
     """
     # load database onto dataframe
-    engine = create_engine(f'sqlite:///{database_filepath}')
+    engine = create_engine('sqlite:///{}'.format(database_filepath))
     table_name = re.sub(
         r'(.db)$', '', database_filepath.split('/')[-1]
     )
@@ -118,7 +118,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     
     # print classification metrics
     for idx, val in enumerate(category_names):
-        print(f'Category {idx}: {val}')
+        print('Category {}: {}'.format(idx, val))
         print(classification_report(Y_test.values[:, idx], Y_pred[:, idx]))
     
     pass
